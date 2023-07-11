@@ -35,7 +35,7 @@ setup(
     packages=find_packages(where='src'),
     python_requires='>=3.8',
     install_requires=[
-        'pythonnet==2.5.2',
+        'pythonnet==3.0.1',
         'docopt',
     ],
     extras_require={
