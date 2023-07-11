@@ -35,7 +35,7 @@ def make(target_assembly_name: str):
                 _process_system_type_obj(namespace, type_obj)
     
     with time_it('Writing Stub Package', log_func=logger.info):
-        stub_dir = options.output_dir / f'{target_assembly_name}-stubs'
+        stub_dir = options.output_dir / f'{target_assembly_name}'
         
         if options.overwrite or not stub_dir.exists():
             logger.info(f'Writing to Directory: {stub_dir}')
@@ -71,7 +71,8 @@ def make(target_assembly_name: str):
                 f'    Topic :: Utilities',
                 f'',
                 f'[options]',
-                f'packages = find:',
+                f'include_package_data = True',
+                f'packages = find_namespace:',
                 f'install_requires =',
                 f'    pythonnet==3.0.1',
                 f'python_requires = >=3.8',
@@ -123,7 +124,7 @@ def make(target_assembly_name: str):
             
             logger.info(f'Writing: MANIFEST.in')
             manifest_file = stub_dir / 'MANIFEST.in'
-            manifest_file.write_text('\n'.join(set(f'include {n.split(".")[0]}-stubs/*.pyi' for n in namespaces)) + '\n')
+            manifest_file.write_text('\n'.join(set(f'recursive-include {n.split(".")[0]} *' for n in namespaces)) + '\n')
             
             logger.info(f'Writing: Stub Files')
             for namespace_name, namespace in namespaces.items():
@@ -192,7 +193,7 @@ def group(assembly_names: List[str]):
             parent_dir: Path = stub_dir
             init_file: Path = parent_dir / '__init__.pyi'
             for n in namespace_name.split('.'):
-                namespace_dir: Path = parent_dir / strip_path_str(f'{n}-stubs' if parent_dir == stub_dir else n)
+                namespace_dir: Path = parent_dir / strip_path_str(f'{n}' if parent_dir == stub_dir else n)
                 namespace_dir.mkdir(parents=True, exist_ok=True)
                 
                 init_file = namespace_dir / '__init__.pyi'
