@@ -35,7 +35,7 @@ def make(target_assembly_name: str):
                 _process_system_type_obj(namespace, type_obj)
     
     with time_it('Writing Stub Package', log_func=logger.info):
-        stub_dir = options.output_dir / f'{target_assembly_name}'
+        stub_dir = options.output_dir / f'{target_assembly_name}-stubs'
         
         if options.overwrite or not stub_dir.exists():
             logger.info(f'Writing to Directory: {stub_dir}')
