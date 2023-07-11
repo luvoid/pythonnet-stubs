@@ -73,7 +73,7 @@ def make(target_assembly_name: str):
                 f'[options]',
                 f'packages = find:',
                 f'install_requires =',
-                f'    pythonnet==2.5.2',
+                f'    pythonnet==3.0.1',
                 f'python_requires = >=3.8',
                 f'',
             ]))
