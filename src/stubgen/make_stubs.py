@@ -131,7 +131,7 @@ def make(target_assembly_name: str):
                 parent_dir: Path = stub_dir
                 init_file: Path = parent_dir / '__init__.pyi'
                 for n in namespace_name.split('.'):
-                    namespace_dir: Path = parent_dir / strip_path_str(f'{n}-stubs' if parent_dir == stub_dir else n)
+                    namespace_dir: Path = parent_dir / strip_path_str(f'{n}' if parent_dir == stub_dir else n)
                     namespace_dir.mkdir(parents=True, exist_ok=True)
                     
                     init_file = namespace_dir / '__init__.pyi'
