@@ -531,7 +531,10 @@ def _process_event(namespace: Namespace, event_info: EventInfo) -> Event:
 
 
 def _get_parameter(namespace: Namespace, parameter_info: ParameterInfo) -> Parameter:
-    name = make_python_name(parameter_info.Name)
+    if parameter_info.Name is None:
+        name = f'__param{parameter_info.Position}'
+    else:
+        name = make_python_name(parameter_info.Name)
     type = _get_type(namespace, parameter_info.ParameterType)
     try:
         default = parameter_info.RawDefaultValue if parameter_info.HasDefaultValue else None
